@@ -1,1 +1,3 @@
-build s -e "tests.c" && build && ./bin/micromacs
+#!/bin/sh
+
+build s -e "tests" && build $@ && ./bin/micromacs

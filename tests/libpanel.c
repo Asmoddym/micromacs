@@ -124,22 +124,22 @@ int main()
 				break;
 
 		}
-				move(LINES - 4, 0);
-				clrtoeol();
-				if(size == TRUE)
-				{	old_win = panel_window(stack_top);
-					temp_win = newwin(newh, neww, newy, newx);
-					replace_panel(stack_top, temp_win);
-					win_show(temp_win, top->label, top->label_color);
-					delwin(old_win);
-					size = FALSE;
-				}
-move_panel(stack_top, newy, newx);
+		move(LINES - 4, 0);
+		clrtoeol();
+		if(size == TRUE)
+		{	old_win = panel_window(stack_top);
+			temp_win = newwin(newh, neww, newy, newx);
+			replace_panel(stack_top, temp_win);
+			win_show(temp_win, top->label, top->label_color);
+			delwin(old_win);
+			size = FALSE;
+		}
+		move_panel(stack_top, newy, newx);
 		attron(COLOR_PAIR(4));
 		mvprintw(LINES - 3, 0, "Use 'm' for moving, 'r' for resizing");
-	    	mvprintw(LINES - 2, 0, "Use tab to browse through the windows (F1 to Exit)");
-	    	attroff(COLOR_PAIR(4));
-	        refresh();
+		mvprintw(LINES - 2, 0, "Use tab to browse through the windows (F1 to Exit)");
+		attroff(COLOR_PAIR(4));
+		refresh();
 		update_panels();
 		doupdate();
 	}

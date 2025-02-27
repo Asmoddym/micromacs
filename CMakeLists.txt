@@ -16,5 +16,5 @@ endif(UNIX)
 
 include_directories(. )
 
-add_executable(micromacs ./src/main.c ./src/panel.c)
-target_link_libraries(micromacs curses)
+add_executable(micromacs ./src/main.c ./src/panel.c ./src/refresh.c ./src/run.c ./src/utils.c)
+target_link_libraries(micromacs curses panel)
