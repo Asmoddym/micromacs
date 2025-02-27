@@ -5,12 +5,13 @@
 t_panel *panel_create(int y, int x, int rows, int cols) {
   t_panel *panel = malloc(sizeof(t_panel));
 
-  panel->handle = subwin(stdscr, rows, cols, y, x);
+  panel->handle = derwin(stdscr, rows, cols, y, x);
   panel->rows = rows;
   panel->cols = cols;
+  panel->x = x;
+  panel->y = y;
   panel->cursor_x = 0;
   panel->cursor_y = 0;
-  wrefresh(panel->handle);
 
   return panel;
 }

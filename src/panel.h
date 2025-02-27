@@ -7,7 +7,8 @@ typedef struct s_panel {
   WINDOW *handle;
   int rows;
   int cols;
-
+  int x;
+  int y;
   int cursor_x;
   int cursor_y;
 } t_panel;

@@ -21,6 +21,24 @@
 
 #include "panel.h"
 
+void panel_move(t_panel *panel, int offset_y, int offset_x) {
+  panel->y += offset_y;
+  panel->x += offset_x;
+
+//  erase();
+//  wclear(stdscr);
+//
+
+ /* clear(); */
+ /* wclear(panel->handle); */
+ mvderwin(panel->handle, panel->y, panel->x);
+//  wrefresh(panel->handle);
+
+// panel_border(panel, 0);
+//  doupdate();
+//  refresh();
+}
+
 int main() {
   initscr();
   clear();
@@ -35,10 +53,40 @@ int main() {
   init_pair(2, COLOR_BLUE, COLOR_GREEN);
 
   t_panel *panel = panel_create(0, 0, LINES / 2, COLS / 2);
-  panel_border(panel, 0);
+  t_panel *panel2 = panel_create(10, 10, LINES / 2, COLS / 2);
   refresh();
 
-  getch();
+  char cc;
+
+  while ((cc = getch())) {
+    clear();
+    wclear(panel->handle);
+    wclear(panel2->handle);
+
+
+    if (cc == 'q') break;
+
+    switch (cc) {
+    case 'a':
+      panel_move(panel, 0, 1);
+      break;
+      case 'z':
+        panel_move(panel, 0, -1);
+    }
+
+        wbkgd(panel2->handle, COLOR_PAIR(2));
+    panel_border(panel2, 0);
+    wprintw(panel2->handle, "bla");
+    wnoutrefresh(panel2->handle);
+
+    wbkgd(panel->handle, COLOR_PAIR(1));
+    panel_border(panel, 0);
+    wprintw(panel->handle, "coucou");
+    wnoutrefresh(panel->handle);
+
+    refresh();
+  }
+//  getch();
 
   panel_destroy(panel);
   endwin();
