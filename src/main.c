@@ -126,27 +126,47 @@ while ((c = getch())) {
     case 5:
       cursorx = cursorx == sizex ? cursorx : cursorx + 1;
       break;
-
-    case KEY_ENTER:
-//      printw("\nkey_enter: %d", c);
-      break;
-    case ctrl('a'):
 //      wprintw(boite, "\nkey: ctrl j "BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(c));
-      wrefresh(boite);
+//      wrefresh(boite);
       break;
+    case 14:
     default:
-      printw("\nkeyname: %d = %s\n", c, keyname(c));
+      printw("\%d %s\n", c, keyname(c));
+
+      if (c == 14 && cursory + 1 <= lines_number) {
+        int jump_down_of = cursory + 1;
+
+        while (lines[jump_down_of] != NULL && strlen(lines[jump_down_of]) != 0) {
+          jump_down_of++;
+        }
+
+        cursory = jump_down_of;
+      }
+
+//      lines[cursory][cursorx] = c;
+//        cursorx++;
       break;
   }
 
-      int offset = cursory - sizey + 2;
-      printw("%d, %d  %d ", cursory, sizey - 1, offset);
+  int offset = cursory - sizey + 2;
+
+  if (offset > 0) {
+//    clear();
+//    wclear(boite);
+    mvwin(boite, 1, 2);
+    clear();
+    refresh();
+  //  refresh();
+ //wrefresh(boite);
+    //
+  }
 
       for (int i = 1; i < sizey - 1; i++) {
         int line_idx = i + (offset > 0 ? offset : 0);
         int len = strlen(lines[line_idx]);
 
-        for (int j = 0; j < sizex - 2; j++) {
+        mvwprintw(boite, i, 1, "%d|", line_idx);
+        for (int j = 0; j < sizex - 2 - 5; j++) {
           unsigned char cc = j >= len ? ' ' : lines[line_idx][j];
 
           char cursor_on_x = cursorx == j;
@@ -159,7 +179,7 @@ while ((c = getch())) {
             attributes |= A_BLINK;
           }
 
-          mvwaddch(boite, i, 1 + j, (chtype)(cc | attributes));
+          mvwaddch(boite, i, 5 + j, (chtype)(cc | attributes));
         }
 //      printw("<%c>", lines[i + x][0]);
 //    mvwaddchstr(boite, i, 1, lines[i + x]);

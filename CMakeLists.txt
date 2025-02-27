@@ -1,7 +1,7 @@
 # Automatically generated CMakeLists.txt
 
 cmake_minimum_required(VERSION 3.7.2)
-project(c)
+project(micromacs)
 
 set(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
@@ -16,5 +16,5 @@ endif(UNIX)
 
 include_directories(. )
 
-add_executable(c ./src/main.c)
-target_link_libraries(c curses)
+add_executable(micromacs ./src/main.c)
+target_link_libraries(micromacs curses)
