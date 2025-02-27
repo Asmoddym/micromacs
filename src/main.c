@@ -4,8 +4,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <ncurses.h>
 #include <string.h>
+
 #define ctrl(x)           ((x) & 0x1f)
 
 #define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
@@ -19,7 +19,31 @@
   ((byte) & 0x02 ? '1' : '0'), \
     ((byte) & 0x01 ? '1' : '0')
 
+#include "panel.h"
+
 int main() {
+  initscr();
+  clear();
+  curs_set(0);
+  raw();
+  nonl();
+  noecho();
+  keypad(stdscr, TRUE);
+
+  start_color();
+  init_pair(1, COLOR_BLUE, COLOR_RED);
+  init_pair(2, COLOR_BLUE, COLOR_GREEN);
+
+  t_panel *panel = panel_create(0, 0, LINES / 2, COLS / 2);
+  panel_border(panel, 0);
+  refresh();
+
+  getch();
+
+  panel_destroy(panel);
+  endwin();
+
+  return 0;
 
   /* WINDOW *boite; */
 
