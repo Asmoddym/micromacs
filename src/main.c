@@ -6,38 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ctrl(x)           ((x) & 0x1f)
-
-#define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
-#define BYTE_TO_BINARY(byte)  \
-  ((byte) & 0x80 ? '1' : '0'), \
-  ((byte) & 0x40 ? '1' : '0'), \
-  ((byte) & 0x20 ? '1' : '0'), \
-  ((byte) & 0x10 ? '1' : '0'), \
-  ((byte) & 0x08 ? '1' : '0'), \
-  ((byte) & 0x04 ? '1' : '0'), \
-  ((byte) & 0x02 ? '1' : '0'), \
-    ((byte) & 0x01 ? '1' : '0')
-
 #include "panel.h"
-
-void panel_move(t_panel *panel, int offset_y, int offset_x) {
-  panel->y += offset_y;
-  panel->x += offset_x;
-
-//  erase();
-//  wclear(stdscr);
-//
-
- /* clear(); */
- /* wclear(panel->handle); */
- mvderwin(panel->handle, panel->y, panel->x);
-//  wrefresh(panel->handle);
-
-// panel_border(panel, 0);
-//  doupdate();
-//  refresh();
-}
 
 int main() {
   initscr();
@@ -56,14 +25,19 @@ int main() {
   t_panel *panel2 = panel_create(10, 10, LINES / 2, COLS / 2);
   refresh();
 
+  wbkgd(panel2->handle, COLOR_PAIR(2));
+  panel_border(panel2, 0);
+
+  wbkgd(panel->handle, COLOR_PAIR(1));
+  panel_border(panel, 0);
+
+
   char cc;
 
   while ((cc = getch())) {
-    clear();
-    wclear(panel->handle);
-    wclear(panel2->handle);
-
-
+//    clear();
+//    wclear(panel->handle);
+//    wclear(panel2->handle);
     if (cc == 'q') break;
 
     switch (cc) {
@@ -74,13 +48,9 @@ int main() {
         panel_move(panel, 0, -1);
     }
 
-        wbkgd(panel2->handle, COLOR_PAIR(2));
-    panel_border(panel2, 0);
     wprintw(panel2->handle, "bla");
     wnoutrefresh(panel2->handle);
 
-    wbkgd(panel->handle, COLOR_PAIR(1));
-    panel_border(panel, 0);
     wprintw(panel->handle, "coucou");
     wnoutrefresh(panel->handle);
 

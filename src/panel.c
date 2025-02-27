@@ -26,3 +26,10 @@ void panel_destroy(t_panel *panel) {
   delwin(panel->handle);
   free(panel);
 }
+
+void panel_move(t_panel *panel, int offset_y, int offset_x) {
+  panel->y += offset_y;
+  panel->x += offset_x;
+
+ mvderwin(panel->handle, panel->y, panel->x);
+}

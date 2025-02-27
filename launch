@@ -1,0 +1,1 @@
+build s -e "tests.c" && build && ./bin/micromacs
