@@ -13,6 +13,11 @@ typedef struct s_panel {
   int y;
   int cursor_x;
   int cursor_y;
+
+  struct s_panel *top_panel;
+  struct s_panel *bottom_panel;
+  struct s_panel *left_panel;
+  struct s_panel *right_panel;
 } t_panel;
 
 typedef struct s_panel_data {

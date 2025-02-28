@@ -4,6 +4,12 @@
 # include "panel.h"
 
 # define MAX_PANELS 8
+# define MESSAGE_MAX_LENGTH 100
+
+enum e_editor_mode {
+  MODE_X,
+  MODE_NONE
+};
 
 typedef struct s_editor {
   t_panel *ui_bottom;
@@ -15,9 +21,10 @@ typedef struct s_editor {
   int height;
   int width;
 
-  char message[256];
+  char message[MESSAGE_MAX_LENGTH];
 
-  char ch;
+  enum e_editor_mode mode;
+  int ch;
 } t_editor;
 
 extern t_editor E;

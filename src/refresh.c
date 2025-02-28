@@ -12,6 +12,7 @@ void redraw_panels() {
 
 void redraw_ui() {
   box(E.ui_bottom->window, 0, 0);
+
   mvwprintw(E.ui_bottom->window, 1, 2, "%s", E.message);
   mvwprintw(E.ui_bottom->window, 1, E.ui_bottom->cols - 40, "Last key: %d (%s) "BYTE_TO_BINARY_PATTERN, E.ch, keyname(E.ch), BYTE_TO_BINARY(E.ch));
 }
@@ -19,8 +20,6 @@ void redraw_ui() {
 void refresh_editor() {
   redraw_ui();
   redraw_panels();
-
-  mvwprintw(E.current_panel->window, 5, 5, "%d, %d\n", 'a', ctrl('a'));
 
   refresh();
   update_panels();

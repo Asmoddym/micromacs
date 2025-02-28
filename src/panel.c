@@ -5,6 +5,7 @@
 #include <panel.h>
 #include <stdlib.h>
 #include "panel.h"
+#include "editor.h"
 
 t_panel_data *panel_create_data(const char *title) {
   t_panel_data *data = malloc(sizeof(t_panel_data));
@@ -25,6 +26,10 @@ t_panel *panel_create(int y, int x, int rows, int cols, const char *title) {
   panel->y = y;
   panel->cursor_x = 0;
   panel->cursor_y = 0;
+  panel->top_panel = NULL;
+  panel->bottom_panel = NULL;
+  panel->left_panel = NULL;
+  panel->right_panel = NULL;
 
   set_panel_userptr(panel->panel, panel_create_data(title));
 
@@ -56,9 +61,6 @@ void panel_show(t_panel *panel) {
 
   box(panel->window, 0, 0);
 
-  /* int maxx = getmaxx(panel->window); */
-  /* mvwchgat(panel->window, 1, 1, maxx - 2, A_STANDOUT, 0, NULL); */
-
   mvwaddch(panel->window, 2, 0, ACS_LTEE);
   mvwhline(panel->window, 2, 1, ACS_HLINE, panel->cols - 2);
   mvwaddch(panel->window, 2, panel->cols - 1, ACS_RTEE);
@@ -66,6 +68,7 @@ void panel_show(t_panel *panel) {
   if (data->title) {
     panel_print_title(panel, data->title);
   }
+
 }
 
 void panel_print_title(t_panel *panel, const char *string) {
@@ -75,7 +78,8 @@ void panel_print_title(t_panel *panel, const char *string) {
   x = panel->cols / 2 - strlen(string) / 2;
   y = 1;
 
-  panel_print(panel, y, x, string, 0);
+  mvwchgat(panel->window, 1, 1, panel->cols - 2, panel == E.current_panel ? A_STANDOUT : 0, 0, NULL);
+  panel_print(panel, y, x, string, panel == E.current_panel ? A_STANDOUT : 0);
 
   sprintf(infos, "%d,%d", panel->rows, panel->cols);
   panel_print(panel, y, panel->cols - 8, infos, A_STANDOUT);
@@ -85,8 +89,6 @@ void panel_print(t_panel *panel, int y, int x, const char *string, chtype attrib
   WINDOW *win = panel->window;
 
   wattron(win, attributes);
-
-//  mvwchgat(win, y, 0, panel->cols, A_STANDOUT, 0, NULL);
   mvwprintw(win, y, x, "%s", string);
   wattroff(win, attributes);
 }

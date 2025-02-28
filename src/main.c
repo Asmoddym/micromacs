@@ -18,6 +18,7 @@ void init_editor() {
 
   getmaxyx(stdscr, E.height, E.width);
   E.panel_count = 0;
+  E.mode = MODE_NONE;
 }
 
 int main() {
