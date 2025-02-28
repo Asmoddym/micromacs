@@ -39,10 +39,12 @@ void run() {
     if (E.ch == 'q') break;
 
     switch (E.ch) {
-      case 49: //ctrl arrow right
+      case ctrl(KEY_RIGHT):
+//      case 49: //ctrl arrow right
         create_new_panel(FALSE);
         break;
-      case 14: // ctrl arrow down
+      case ctrl(KEY_DOWN):
+//      case 14: // ctrl arrow down
         create_new_panel(TRUE);
     }
 

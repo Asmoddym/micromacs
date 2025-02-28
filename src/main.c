@@ -25,6 +25,7 @@ int main() {
   start_color();
   raw();
   keypad(stdscr, TRUE);
+  meta(stdscr, FALSE);
   nonl();
   noecho();
 
