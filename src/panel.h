@@ -14,10 +14,8 @@ typedef struct s_panel {
   int cursor_x;
   int cursor_y;
 
-  struct s_panel *top_panel;
-  struct s_panel *bottom_panel;
-  struct s_panel *left_panel;
-  struct s_panel *right_panel;
+  struct s_panel *next;
+  struct s_panel *prev;
 } t_panel;
 
 typedef struct s_panel_data {

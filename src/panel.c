@@ -26,10 +26,8 @@ t_panel *panel_create(int y, int x, int rows, int cols, const char *title) {
   panel->y = y;
   panel->cursor_x = 0;
   panel->cursor_y = 0;
-  panel->top_panel = NULL;
-  panel->bottom_panel = NULL;
-  panel->left_panel = NULL;
-  panel->right_panel = NULL;
+  panel->next = NULL;
+  panel->prev = NULL;
 
   set_panel_userptr(panel->panel, panel_create_data(title));
 
