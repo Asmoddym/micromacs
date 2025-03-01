@@ -7,8 +7,9 @@
 # define MESSAGE_MAX_LENGTH 100
 
 enum e_editor_mode {
-  MODE_X,
-  MODE_NONE
+  MODE_STANDARD,
+  MODE_NAVIGATION,
+  MODE_COUNT
 };
 
 typedef struct s_editor {

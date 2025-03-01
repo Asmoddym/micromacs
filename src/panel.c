@@ -72,15 +72,16 @@ void panel_show(t_panel *panel) {
 void panel_print_title(t_panel *panel, const char *string) {
   int x, y;
   char infos[8];
+  unsigned int attributes = E.current_panel == panel ? A_STANDOUT : 0;
 
   x = panel->cols / 2 - strlen(string) / 2;
   y = 1;
 
-  mvwchgat(panel->window, 1, 1, panel->cols - 2, panel == E.current_panel ? A_STANDOUT : 0, 0, NULL);
-  panel_print(panel, y, x, string, panel == E.current_panel ? A_STANDOUT : 0);
+  mvwchgat(panel->window, 1, 1, panel->cols - 2, attributes, 0, NULL);
+  panel_print(panel, y, x, string, attributes);
 
   sprintf(infos, "%d,%d", panel->rows, panel->cols);
-  panel_print(panel, y, panel->cols - 8, infos, A_STANDOUT);
+  panel_print(panel, y, panel->cols - 8, infos, attributes);
 }
 
 void panel_print(t_panel *panel, int y, int x, const char *string, chtype attributes) {

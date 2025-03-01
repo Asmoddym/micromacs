@@ -14,7 +14,6 @@ if (UNIX)
   set(CMAKE_CXX_FLAGS "-W -Wall -Wextra")
 endif(UNIX)
 
-include_directories(. )
-
-add_executable(micromacs ./src/main.c ./src/panel.c ./src/refresh.c ./src/run.c ./src/utils.c)
+add_executable(micromacs ./src/main.c ./src/modes/navigation.c ./src/modes/standard.c ./src/panel.c ./src/refresh.c ./src/run.c ./src/utils.c)
+target_include_directories(micromacs PRIVATE . ./src)
 target_link_libraries(micromacs curses panel)

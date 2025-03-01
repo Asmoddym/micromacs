@@ -1,13 +1,3 @@
-#include <curses.h>
-#include <ncurses.h>
-#include <panel.h>
-#include <stdbool.h>
-#include <termios.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "editor.h"
 #include "run.h"
 
@@ -18,7 +8,7 @@ void init_editor() {
 
   getmaxyx(stdscr, E.height, E.width);
   E.panel_count = 0;
-  E.mode = MODE_NONE;
+  E.mode = MODE_STANDARD;
 }
 
 int main() {
