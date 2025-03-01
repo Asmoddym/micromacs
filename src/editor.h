@@ -17,7 +17,6 @@ typedef struct s_editor {
 
   t_window *windows[MAX_WINDOWS];
   t_window *current_window;
-  int window_count;
 
   int height;
   int width;

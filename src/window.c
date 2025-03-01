@@ -112,3 +112,35 @@ void window_resize(t_window *window, int new_width, int new_height) {
   window->cols = new_width;
   window->rows = new_height;
 }
+
+int window_count() {
+  int count = 0;
+
+  for (int i = 0; i < MAX_WINDOWS; i++) {
+    if (E.windows[i]) {
+      count++;
+    }
+  }
+
+  return count;
+}
+
+t_window *window_first_window() {
+  for (int i = 0; i < MAX_WINDOWS; i++) {
+    if (E.windows[i]) {
+      return E.windows[i];
+    }
+  }
+
+  return NULL;
+}
+
+t_window *window_last_window() {
+  for (int i = MAX_WINDOWS - 1; i >= 0; i--) {
+    if (E.windows[i]) {
+      return E.windows[i];
+    }
+  }
+
+  return NULL;
+}

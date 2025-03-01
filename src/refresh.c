@@ -2,12 +2,11 @@
 #include "editor.h"
 
 void redraw_windows() {
-  for (int i = 0; i < E.window_count; i++) {
-    window_show(E.windows[i]);
+  for (int i = 0; i < MAX_WINDOWS; i++) {
+    if (E.windows[i]) {
+      window_show(E.windows[i]);
+    }
   }
-
-  /* update_panels(); */
-  /* doupdate(); */
 }
 
 void redraw_ui() {

@@ -22,7 +22,7 @@ void run() {
     if (E.ch == 'q') break;
 
     switch (E.ch) {
-      case ctrl('x'):
+      case 'x': //ctrl('x'):
         E.mode = MODE_NAVIGATION;
         message("NAVIGATION MODE");
         break;
@@ -34,7 +34,9 @@ void run() {
     refresh_editor();
   }
 
-  for (int i = 0; i < E.window_count; i++) {
-    window_destroy(E.windows[i]);
+  for (int i = 0; i < MAX_WINDOWS; i++) {
+    if (E.windows[i]) {
+      window_destroy(E.windows[i]);
+    }
   }
 }

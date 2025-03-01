@@ -35,4 +35,8 @@ void window_print_title(t_window *win, const char *string);
 void window_print(t_window *win, int y, int x, const char *string, chtype attributes);
 void window_resize(t_window *win, int new_width, int new_height);
 
+int window_count();
+t_window *window_first_window();
+t_window *window_last_window();
+
 #endif

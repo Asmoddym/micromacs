@@ -1,16 +1,17 @@
 #include "editor.h"
 #include "utils.h"
+#include "window.h"
 
 void navigation_create_new_window(char below) {
   t_window *window;
 
-  if (E.window_count == MAX_WINDOWS) {
+  if (window_count() == MAX_WINDOWS) {
     message("NOPE");
 
     return ;
   }
 
-  if (E.window_count == 0) {
+  if (window_count() == 0) {
     window = window_create(0, 0, E.height - 3, E.width, "coucou");
 
     window->next = window;
@@ -26,16 +27,43 @@ void navigation_create_new_window(char below) {
     y = E.current_window->y + (below ? new_height : 0);
     window = window_create(y, x, new_height, new_width, "bla");
 
-    window->next = E.windows[0];
+    window->next = E.current_window->next;
+    window->next->prev = window;
     window->prev = E.current_window;
 
-    E.windows[0]->prev = window;
     E.current_window->next = window;
   }
 
-  E.windows[E.window_count] = window;
-  E.window_count++;
+  for (int i = 0; i < MAX_WINDOWS; i++) {
+    if (!E.windows[i]) {
+      E.windows[i] = window;
+      break;
+    }
+  }
+
   E.current_window = window;
+}
+
+void navigation_recompute_windows_layout_before_destroy() {
+}
+
+void navigation_destroy_current_window() {
+  t_window *current = E.current_window;
+
+  current->prev->next = current->next;
+  current->next->prev = current->prev;
+  E.current_window = current->prev;
+
+  for (int i = 0; i < MAX_WINDOWS; i++) {
+    if (E.windows[i] == current) {
+      E.windows[i] = NULL;
+      break;
+    }
+  }
+
+  navigation_recompute_windows_layout_before_destroy();
+
+  window_destroy(current);
 }
 
 void process_navigation_callback() {
@@ -46,11 +74,14 @@ void process_navigation_callback() {
     case 'N':
       navigation_create_new_window(TRUE);
       break;
+    case 'd':
+      navigation_destroy_current_window();
+      break;
     case KEY_LEFT:
       E.current_window = E.current_window->prev;
       break;
     case KEY_RIGHT:
-      E.current_window = E.current_window->prev;
+      E.current_window = E.current_window->next;
       break;
   }
 
