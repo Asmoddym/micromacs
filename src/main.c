@@ -8,12 +8,14 @@ void init_editor() {
 
   getmaxyx(stdscr, E.height, E.width);
   E.mode = MODE_STANDARD;
-  for (int i = 0; i < MAX_WINDOWS; i++) {
+  for (int i = 0; i < MAX_WINDOWS + 1; i++) {
     E.windows[i] = NULL;
   }
 }
 
 int main() {
+//  return 0;
+
   initscr();
   start_color();
   raw();

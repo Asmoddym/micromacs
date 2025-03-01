@@ -53,5 +53,7 @@ dkms.conf
 
 bin/
 .build
+# clang stuff
+.cache
 
 compile_commands.json

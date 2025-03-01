@@ -15,7 +15,7 @@ enum e_editor_mode {
 typedef struct s_editor {
   t_window *ui_bottom;
 
-  t_window *windows[MAX_WINDOWS];
+  t_window *windows[MAX_WINDOWS + 1];
   t_window *current_window;
 
   int height;

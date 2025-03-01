@@ -13,9 +13,6 @@ typedef struct s_window {
   int y;
   int cursor_x;
   int cursor_y;
-
-  struct s_window *next;
-  struct s_window *prev;
 } t_window;
 
 typedef struct s_window_data {
@@ -23,6 +20,7 @@ typedef struct s_window_data {
 } t_window_data;
 
 t_window_data *window_create_data(const char *str);
+t_window_data *window_data(t_window *win);
 
 t_window *window_create(int y, int x, int rows, int cols, const char *title);
 void window_destroy(t_window *win);
@@ -36,7 +34,8 @@ void window_print(t_window *win, int y, int x, const char *string, chtype attrib
 void window_resize(t_window *win, int new_width, int new_height);
 
 int window_count();
-t_window *window_first_window();
-t_window *window_last_window();
+int window_position(t_window *window);
+
+const char *window_get_title(t_window *win);
 
 #endif

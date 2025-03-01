@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <panel.h>
 #include <stdio.h>
 #include <string.h>
 #include <curses.h>
@@ -15,6 +16,10 @@ t_window_data *window_create_data(const char *title) {
   return data;
 }
 
+t_window_data *window_data(t_window *win) {
+  return (t_window_data *)panel_userptr(win->panel);
+}
+
 t_window *window_create(int y, int x, int rows, int cols, const char *title) {
   t_window *window = malloc(sizeof(t_window));
 
@@ -26,8 +31,6 @@ t_window *window_create(int y, int x, int rows, int cols, const char *title) {
   window->y = y;
   window->cursor_x = 0;
   window->cursor_y = 0;
-  window->next = NULL;
-  window->prev = NULL;
 
   set_panel_userptr(window->panel, window_create_data(title));
 
@@ -125,22 +128,16 @@ int window_count() {
   return count;
 }
 
-t_window *window_first_window() {
+int window_position(t_window *win) {
   for (int i = 0; i < MAX_WINDOWS; i++) {
-    if (E.windows[i]) {
-      return E.windows[i];
+    if (E.windows[i] == win) {
+      return i;
     }
   }
 
-  return NULL;
+  return -1;
 }
 
-t_window *window_last_window() {
-  for (int i = MAX_WINDOWS - 1; i >= 0; i--) {
-    if (E.windows[i]) {
-      return E.windows[i];
-    }
-  }
-
-  return NULL;
+const char *window_get_title(t_window *win) {
+  return window_data(win)->title;
 }
