@@ -1,4 +1,4 @@
 #include "editor.h"
 
-void navigation_standard_callback() {
+void process_standard_callback() {
 }

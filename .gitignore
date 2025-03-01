@@ -53,3 +53,5 @@ dkms.conf
 
 bin/
 .build
+
+compile_commands.json

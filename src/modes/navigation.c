@@ -1,56 +1,56 @@
 #include "editor.h"
 #include "utils.h"
 
-void create_new_panel(char below) {
-  t_panel *panel;
+void navigation_create_new_window(char below) {
+  t_window *window;
 
-  if (E.panel_count == MAX_PANELS) {
+  if (E.window_count == MAX_WINDOWS) {
     message("NOPE");
 
     return ;
   }
 
-  if (E.panel_count == 0) {
-    panel = panel_create(0, 0, E.height - 3, E.width, "coucou");
+  if (E.window_count == 0) {
+    window = window_create(0, 0, E.height - 3, E.width, "coucou");
 
-    panel->next = panel;
-    panel->prev = panel;
+    window->next = window;
+    window->prev = window;
   } else {
-    int new_width = E.current_panel->cols / (below ? 1 : 2);
-    int new_height = E.current_panel->rows / (below ? 2 : 1);
+    int new_width = E.current_window->cols / (below ? 1 : 2);
+    int new_height = E.current_window->rows / (below ? 2 : 1);
     int x, y;
 
-    panel_resize(E.current_panel, new_width, new_height);
+    window_resize(E.current_window, new_width, new_height);
 
-    x = E.current_panel->x + (below ? 0 : new_width);
-    y = E.current_panel->y + (below ? new_height : 0);
-    panel = panel_create(y, x, new_height, new_width, "bla");
+    x = E.current_window->x + (below ? 0 : new_width);
+    y = E.current_window->y + (below ? new_height : 0);
+    window = window_create(y, x, new_height, new_width, "bla");
 
-    panel->next = E.panels[0];
-    panel->prev = E.current_panel;
+    window->next = E.windows[0];
+    window->prev = E.current_window;
 
-    E.panels[0]->prev = panel;
-    E.current_panel->next = panel;
+    E.windows[0]->prev = window;
+    E.current_window->next = window;
   }
 
-  E.panels[E.panel_count] = panel;
-  E.panel_count++;
-  E.current_panel = panel;
+  E.windows[E.window_count] = window;
+  E.window_count++;
+  E.current_window = window;
 }
 
 void process_navigation_callback() {
   switch (E.ch) {
     case 'n':
-      create_new_panel(FALSE);
+      navigation_create_new_window(FALSE);
       break;
     case 'N':
-      create_new_panel(TRUE);
+      navigation_create_new_window(TRUE);
       break;
     case KEY_LEFT:
-      E.current_panel = E.current_panel->prev;
+      E.current_window = E.current_window->prev;
       break;
     case KEY_RIGHT:
-      E.current_panel = E.current_panel->prev;
+      E.current_window = E.current_window->prev;
       break;
   }
 

@@ -14,7 +14,7 @@ void process_key() {
 }
 
 void run() {
-  navigation_create_new_panel(FALSE);
+  navigation_create_new_window(FALSE);
   refresh_editor();
 
   while ((E.ch = getch())) {
@@ -34,7 +34,7 @@ void run() {
     refresh_editor();
   }
 
-  for (int i = 0; i < E.panel_count; i++) {
-    panel_destroy(E.panels[i]);
+  for (int i = 0; i < E.window_count; i++) {
+    window_destroy(E.windows[i]);
   }
 }

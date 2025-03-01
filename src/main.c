@@ -4,10 +4,10 @@
 t_editor E;
 
 void init_editor() {
-  E.ui_bottom = panel_create(LINES - 3, 0, 3, COLS, NULL);
+  E.ui_bottom = window_create(LINES - 3, 0, 3, COLS, NULL);
 
   getmaxyx(stdscr, E.height, E.width);
-  E.panel_count = 0;
+  E.window_count = 0;
   E.mode = MODE_STANDARD;
 }
 

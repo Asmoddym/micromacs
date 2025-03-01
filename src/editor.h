@@ -1,9 +1,9 @@
 #ifndef EDITOR_H_
 # define EDITOR_H_
 
-# include "panel.h"
+# include "window.h"
 
-# define MAX_PANELS 8
+# define MAX_WINDOWS 8
 # define MESSAGE_MAX_LENGTH 100
 
 enum e_editor_mode {
@@ -13,11 +13,11 @@ enum e_editor_mode {
 };
 
 typedef struct s_editor {
-  t_panel *ui_bottom;
+  t_window *ui_bottom;
 
-  t_panel *panels[MAX_PANELS];
-  t_panel *current_panel;
-  int panel_count;
+  t_window *windows[MAX_WINDOWS];
+  t_window *current_window;
+  int window_count;
 
   int height;
   int width;
