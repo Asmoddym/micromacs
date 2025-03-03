@@ -2,19 +2,19 @@
 #include "utils.h"
 #include "refresh.h"
 #include "modes.h"
-#include "modes/navigation/navigation.h"
+#include "modes/layout/layout.h"
 
 void process_key() {
   static void (*mode_callbacks[MODE_COUNT])() = {
     process_standard_callback,
-    process_navigation_callback
+    process_layout_callback
   };
 
   mode_callbacks[E.mode]();
 }
 
 void run() {
-  navigation_create_new_window(FALSE);
+  layout_create_new_window(FALSE);
   refresh_editor();
 
   while ((E.ch = getch())) {
@@ -23,8 +23,8 @@ void run() {
 
     switch (E.ch) {
       case 'x':
-        E.mode = MODE_NAVIGATION;
-        message("NAVIGATION MODE");
+        E.mode = MODE_LAYOUT;
+        message("LAYOUT MODE");
         break;
       default:
         process_key();
@@ -34,9 +34,7 @@ void run() {
     refresh_editor();
   }
 
-  for (int i = 0; i < MAX_WINDOWS; i++) {
-    if (E.windows[i]) {
-      window_destroy(E.windows[i]);
-    }
+  for (t_window **tmp = &(E.windows[0]); *tmp; tmp++) {
+    window_destroy(*tmp);
   }
 }

@@ -119,11 +119,7 @@ void window_resize(t_window *window, int new_width, int new_height) {
 int window_count() {
   int count = 0;
 
-  for (int i = 0; i < MAX_WINDOWS; i++) {
-    if (E.windows[i]) {
-      count++;
-    }
-  }
+  for (; count < MAX_WINDOWS && E.windows[count]; count++);
 
   return count;
 }

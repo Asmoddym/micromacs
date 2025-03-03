@@ -2,9 +2,9 @@
 #include "editor.h"
 
 void redraw_windows() {
-  for (int i = 0; i < MAX_WINDOWS; i++) {
-    if (E.windows[i]) {
-      window_show(E.windows[i]);
+  for (t_window **tmp = &(E.windows[0]); *tmp; tmp++) {
+    if (*tmp) {
+      window_show(*tmp);
     }
   }
 }

@@ -8,7 +8,7 @@
 
 enum e_editor_mode {
   MODE_STANDARD,
-  MODE_NAVIGATION,
+  MODE_LAYOUT,
   MODE_COUNT
 };
 
