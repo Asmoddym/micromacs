@@ -80,30 +80,6 @@
 /*  boite = subwin(stdscr, sizey, sizex, LINES / 2 - sizey / 2, COLS / 2 - sizex / 2); */
 
 
-/*   FILE *file = fopen("src/main.c", "r"); */
-
-/*   char **lines = malloc(sizeof(char *) * 1000); */
-
-/*   int lines_number = 0; */
-
-/*   size_t size = 0; */
-/*   size_t read; */
-
-/*   while ((read = getline(&lines[lines_number], &size, file)) != -1) { */
-/*     lines[lines_number][read - 1] = 0; */
-/*     lines_number++; */
-/*   } */
-
-/*   lines[lines_number] = NULL; */
-
-
-
-/*   /\* while (fgets(buffer, sizeof(buffer), file)) { *\/ */
-/*   /\*   lines[i] = strdup(buffer); *\/ */
-/*   /\*   i++; *\/ */
-/*   /\* } *\/ */
-
-/*     fclose(file); */
 
 /* //    wbkgd(boite, COLOR_PAIR(1)); */
 /*     wattron(boite,COLOR_PAIR(2)); */

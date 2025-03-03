@@ -3,6 +3,7 @@
 
 # include <panel.h>
 # include <ncurses.h>
+# include "io/file.h"
 
 typedef struct s_window {
   WINDOW *handle;
@@ -13,6 +14,8 @@ typedef struct s_window {
   int y;
   int cursor_x;
   int cursor_y;
+
+  t_file_buffer *file_buffer;
 } t_window;
 
 typedef struct s_window_data {
@@ -30,7 +33,11 @@ void window_move(t_window *win, int offset_y, int offset_x);
 void window_show(t_window *win);
 
 void window_print_title(t_window *win, const char *string);
-void window_print(t_window *win, int y, int x, const char *string, chtype attributes);
+void window_print_line(t_window *win, int y, int x, const char *string, chtype attributes);
+
+void window_print_file_buffer(t_window *win);
+void window_print_file_buffer_lines(t_window *win, char **lines);
+
 void window_resize(t_window *win, int new_width, int new_height);
 
 int window_count();

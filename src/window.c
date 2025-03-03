@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include "window.h"
 #include "editor.h"
+#include "utils.h"
 
 t_window_data *window_create_data(const char *title) {
   t_window_data *data = malloc(sizeof(t_window_data));
@@ -31,6 +32,7 @@ t_window *window_create(int y, int x, int rows, int cols, const char *title) {
   window->y = y;
   window->cursor_x = 0;
   window->cursor_y = 0;
+  window->file_buffer = NULL;
 
   set_panel_userptr(window->panel, window_create_data(title));
 
@@ -70,6 +72,19 @@ void window_show(t_window *window) {
     window_print_title(window, data->title);
   }
 
+  if (window->file_buffer) {
+    window_print_file_buffer(window);
+  }
+}
+
+void window_print_file_buffer(t_window *window) {
+   window_print_file_buffer_lines(window, window->file_buffer->lines);
+}
+
+void window_print_file_buffer_lines(t_window *window, char **lines) {
+  for (int i = 0; lines[i] && i < window->rows - 4; i++) {
+    mvwprintw(window->handle, i + 3, 1, "%s", lines[i]);
+  }
 }
 
 void window_print_title(t_window *window, const char *string) {
@@ -81,13 +96,13 @@ void window_print_title(t_window *window, const char *string) {
   y = 1;
 
   mvwchgat(window->handle, 1, 1, window->cols - 2, attributes, 0, NULL);
-  window_print(window, y, x, string, attributes);
+  window_print_line(window, y, x, string, attributes);
 
   sprintf(infos, "%d,%d", window->rows, window->cols);
-  window_print(window, y, window->cols - 8, infos, attributes);
+  window_print_line(window, y, window->cols - 8, infos, attributes);
 }
 
-void window_print(t_window *window, int y, int x, const char *string, chtype attributes) {
+void window_print_line(t_window *window, int y, int x, const char *string, chtype attributes) {
   WINDOW *win = window->handle;
 
   wattron(win, attributes);
