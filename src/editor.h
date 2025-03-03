@@ -12,7 +12,14 @@ enum e_editor_mode {
   MODE_COUNT
 };
 
+typedef struct s_env {
+  int ac;
+  char **av;
+} t_env;
+
 typedef struct s_editor {
+  t_env env;
+
   t_window *ui_bottom;
 
   t_window *windows[MAX_WINDOWS + 1];
