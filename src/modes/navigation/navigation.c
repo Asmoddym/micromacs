@@ -46,10 +46,6 @@ void navigation_destroy_current_window() {
   window_destroy(current);
 }
 
-int abs(int n) {
-  return n < 0 ? -n : n;
-}
-
 void navigation_go_to_left_window() {
   t_window *candidate = NULL;
 

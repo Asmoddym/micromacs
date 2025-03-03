@@ -15,4 +15,6 @@
 
 void message(const char *s);
 
+int abs(int n);
+
 #endif

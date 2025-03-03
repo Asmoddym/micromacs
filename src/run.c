@@ -2,7 +2,7 @@
 #include "utils.h"
 #include "refresh.h"
 #include "modes.h"
-#include "modes/navigation.h"
+#include "modes/navigation/navigation.h"
 
 void process_key() {
   static void (*mode_callbacks[MODE_COUNT])() = {
@@ -22,7 +22,7 @@ void run() {
     if (E.ch == 'q') break;
 
     switch (E.ch) {
-      case 'x': //ctrl('x'):
+      case 'x':
         E.mode = MODE_NAVIGATION;
         message("NAVIGATION MODE");
         break;

@@ -13,3 +13,7 @@ void message(const char *s) {
   str[MESSAGE_MAX_LENGTH - 1] = 0;
   snprintf(E.message, MESSAGE_MAX_LENGTH, "%s", str);
 }
+
+int abs(int n) {
+  return n < 0 ? -n : n;
+}
