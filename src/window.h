@@ -5,6 +5,11 @@
 # include <ncurses.h>
 # include "io/file.h"
 
+# define WINDOW_HEADER_ROWS 3
+# define WINDOW_FOOTER_ROWS 1
+# define WINDOW_MAX_Y(win) (win->rows - WINDOW_FOOTER_ROWS)
+# define WINDOW_MIN_Y WINDOW_HEADER_ROWS
+
 typedef struct s_window {
   WINDOW *handle;
   PANEL *panel;

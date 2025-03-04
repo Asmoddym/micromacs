@@ -31,7 +31,7 @@ t_window *window_create(int y, int x, int rows, int cols, const char *title) {
   window->x = x;
   window->y = y;
   window->cursor_x = 1;
-  window->cursor_y = 3;
+  window->cursor_y = WINDOW_MIN_Y;
   window->file_buffer = NULL;
 
   set_panel_userptr(window->panel, window_create_data(title));
@@ -62,6 +62,10 @@ void window_move(t_window *window, int offset_y, int offset_x) {
 void window_show(t_window *window) {
   t_window_data *data = (t_window_data *)panel_userptr(window->panel);
 
+  if (window->file_buffer) {
+    window_print_file_buffer(window);
+  }
+
   box(window->handle, 0, 0);
 
   mvwaddch(window->handle, 2, 0, ACS_LTEE);
@@ -71,10 +75,6 @@ void window_show(t_window *window) {
   if (data->title) {
     window_print_title(window, data->title);
   }
-
-  if (window->file_buffer) {
-    window_print_file_buffer(window);
-  }
 }
 
 void window_print_file_buffer(t_window *window) {
@@ -82,14 +82,34 @@ void window_print_file_buffer(t_window *window) {
 }
 
 void window_print_file_buffer_lines(t_window *window, char **lines) {
-  for (int i = 0; lines[i] && i < window->rows - 4; i++) {
-    mvwprintw(window->handle, i + 3, 1, "%s", lines[i]);
+  int tmp_y, tmp_x;
+
+  getyx(window->handle, tmp_y, tmp_x);
+
+  for (int i = 0; i < window->rows - WINDOW_HEADER_ROWS - WINDOW_FOOTER_ROWS; i++) {
+    int index = window->file_buffer->start_index + i;
+    int len = strlen(lines[index]);
+
+    wmove(window->handle, i + WINDOW_MIN_Y, 0);
+
+    for (int x = 0; x < window->cols - 1; x++) {
+      unsigned char c = x >= len ? ' ' : lines[index][x];
+      unsigned int attributes = 0;
+
+      if (E.current_window == window && window->cursor_x == x + 1 && window->cursor_y == i + WINDOW_MIN_Y) {
+        attributes |= A_STANDOUT;
+      }
+
+      mvwaddch(window->handle, i + WINDOW_MIN_Y, 1 + x, (chtype)(c | attributes));
+    }
   }
+
+  move(tmp_y, tmp_x);
 }
 
 void window_print_title(t_window *window, const char *string) {
   int x, y;
-  char infos[8];
+  char infos[20];
   unsigned int attributes = E.current_window == window ? A_STANDOUT : 0;
 
   x = window->cols / 2 - strlen(string) / 2;
@@ -98,8 +118,8 @@ void window_print_title(t_window *window, const char *string) {
   mvwchgat(window->handle, 1, 1, window->cols - 2, attributes, 0, NULL);
   window_print_line(window, y, x, string, attributes);
 
-  sprintf(infos, "%d,%d", window->rows, window->cols);
-  window_print_line(window, y, window->cols - 8, infos, attributes);
+  sprintf(infos, "%d,%d (%d,%d)", window->rows, window->cols, window->cursor_y, window->cursor_x);
+  window_print_line(window, y, window->cols - 16, infos, attributes);
 }
 
 void window_print_line(t_window *window, int y, int x, const char *string, chtype attributes) {
@@ -111,18 +131,6 @@ void window_print_line(t_window *window, int y, int x, const char *string, chtyp
 }
 
 void window_resize(t_window *window, int new_width, int new_height) {
-  // Doesn't work, I don't know why
-  //
-  /* WINDOW *old_win = window_window(window->handle); */
-  /* WINDOW *new_win = newwin(new_height, new_width, window->y, window->x); */
-
-  /* window->cols = new_width; */
-  /* window->rows = new_height; */
-
-  /* replace_window(window->handle, new_win); */
-  /* refresh(); */
-  /* delwin(old_win); */
-
   clear();
   wclear(window->handle);
   wresize(window->handle, new_height, new_width);

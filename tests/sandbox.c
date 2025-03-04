@@ -135,8 +135,7 @@
 /*       if (c == 14 && cursory + 1 <= lines_number) { */
 /*         int jump_down_of = cursory + 1; */
 
-/*         while (lines[jump_down_of] != NULL && strlen(lines[jump_down_of]) != 0) { */
-/*           jump_down_of++; */
+/*         while (lines[jump_down_of] != NULL && strlen(lines[jump_down_of]) != 0) { *//*           jump_down_of++; */
 /*         } */
 
 /*         cursory = jump_down_of; */
