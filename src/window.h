@@ -32,6 +32,7 @@ void window_border(t_window *win, unsigned int attributes);
 void window_move(t_window *win, int offset_y, int offset_x);
 void window_show(t_window *win);
 
+void window_print_cursor(t_window *win);
 void window_print_title(t_window *win, const char *string);
 void window_print_line(t_window *win, int y, int x, const char *string, chtype attributes);
 

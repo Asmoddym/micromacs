@@ -30,8 +30,8 @@ t_window *window_create(int y, int x, int rows, int cols, const char *title) {
   window->cols = cols;
   window->x = x;
   window->y = y;
-  window->cursor_x = 0;
-  window->cursor_y = 0;
+  window->cursor_x = 1;
+  window->cursor_y = 3;
   window->file_buffer = NULL;
 
   set_panel_userptr(window->panel, window_create_data(title));
