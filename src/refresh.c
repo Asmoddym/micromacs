@@ -1,3 +1,4 @@
+#include <string.h>
 #include "utils.h"
 #include "editor.h"
 #include <curses.h>
@@ -15,8 +16,6 @@ void redraw_ui() {
 
   mvwprintw(E.ui_bottom->handle, 1, 2, "%s", E.message);
   mvwprintw(E.ui_bottom->handle, 1, E.ui_bottom->cols - 40, "Last key: %d (%s) "BYTE_TO_BINARY_PATTERN, E.ch, keyname(E.ch), BYTE_TO_BINARY(E.ch));
-
-  wmove(E.current_window->handle, E.current_window->cursor_y, E.current_window->cursor_x);
 }
 
 void refresh_editor() {

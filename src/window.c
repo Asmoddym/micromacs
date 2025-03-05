@@ -95,12 +95,17 @@ void window_print_file_buffer_lines(t_window *window, char **lines) {
     for (int x = 0; x < window->cols - 1; x++) {
       unsigned char c = x >= len ? ' ' : lines[index][x];
       unsigned int attributes = 0;
+      int cursor_x = x;
 
       if (E.current_window == window && window->cursor_x == x + 1 && window->cursor_y == i + WINDOW_MIN_Y) {
         attributes |= A_STANDOUT;
+
+        if (cursor_x > len) {
+          cursor_x = 0;
+        }
       }
 
-      mvwaddch(window->handle, i + WINDOW_MIN_Y, 1 + x, (chtype)(c | attributes));
+      mvwaddch(window->handle, i + WINDOW_MIN_Y, 1 + cursor_x, (chtype)(c | attributes));
     }
   }
 

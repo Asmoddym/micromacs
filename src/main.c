@@ -24,6 +24,7 @@ int main(int ac, char **av) {
   meta(stdscr, FALSE);
   nonl();
   noecho();
+  curs_set(0);
 
   init_pair(1, COLOR_RED, COLOR_BLACK);
   init_pair(2, COLOR_GREEN, COLOR_BLACK);
