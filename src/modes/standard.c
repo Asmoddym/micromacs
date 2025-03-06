@@ -4,6 +4,10 @@
 #include "io/file.h"
 #include "window.h"
 
+int current_line_index(t_window *win) {
+  return win->file_buffer->start_index + win->cursor_y - WINDOW_MIN_Y;
+}
+
 void move_y_cursor(t_window *win, int y_delta) {
   // future cursor is in visible buffer
   if (win->cursor_y + y_delta >= WINDOW_HEADER_ROWS && win->cursor_y + y_delta < WINDOW_MAX_Y(win)) {
@@ -30,22 +34,20 @@ void move_y_cursor(t_window *win, int y_delta) {
   }
 }
 
-int current_line_index(t_window *win) {
-  return win->file_buffer->start_index + win->cursor_y - WINDOW_MIN_Y;
-}
-
 void move_x_cursor(t_window *win, int x_delta) {
   char **lines = win->file_buffer->lines;
+  int current_line_len = (int)strlen(lines[current_line_index(win)]);
 
-  if (win->cursor_x + x_delta == 0) {
+  if (win->cursor_x + x_delta == 0 || (current_line_len == 0 && x_delta == -1)) {
     move_y_cursor(win, -1);
 
+    // recalculating len
     win->cursor_x = 1 + strlen(lines[current_line_index(win)]);
   } else {
     win->cursor_x += x_delta;
   }
 
-  if (win->cursor_x + x_delta - 1 == (int)strlen(lines[current_line_index(win)]) + 2) {
+  if (win->cursor_x + x_delta - 1 == current_line_len + 2 || (current_line_len == 0 && x_delta == 1)) {
     move_y_cursor(win, 1);
     win->cursor_x = 1;
   }
