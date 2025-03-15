@@ -30,8 +30,8 @@ t_window *window_create(int y, int x, int rows, int cols, const char *title) {
   window->cols = cols;
   window->x = x;
   window->y = y;
-  window->cursor_x = 1;
-  window->cursor_y = WINDOW_MIN_Y;
+  window->cursor_x = 0;
+  window->cursor_y = 0;
   window->file_buffer = NULL;
 
   set_panel_userptr(window->panel, window_create_data(title));
@@ -86,26 +86,27 @@ void window_print_file_buffer_lines(t_window *window, char **lines) {
 
   getyx(window->handle, tmp_y, tmp_x);
 
-  for (int i = 0; i < window->rows - WINDOW_HEADER_ROWS - WINDOW_FOOTER_ROWS; i++) {
-    int index = window->file_buffer->start_index + i;
-    int len = strlen(lines[index]);
+  for (int idx_y = 0; idx_y < window->rows - WINDOW_HEADER_ROWS - WINDOW_FOOTER_ROWS; idx_y++) {
+    int idx_lines = window->file_buffer->start_index + idx_y;
+    int len = strlen(lines[idx_lines]);
 
-    wmove(window->handle, i + WINDOW_MIN_Y, 0);
+    wmove(window->handle, idx_y + WINDOW_MIN_Y, 0);
 
-    for (int x = 0; x < window->cols - 1; x++) {
-      unsigned char c = x >= len ? ' ' : lines[index][x];
+    for (int idx_x = 0; idx_x < window->cols - 1; idx_x++) {
+      unsigned char c = idx_x >= len ? ' ' : lines[idx_lines][idx_x];
       unsigned int attributes = 0;
-      int cursor_x = x;
+      int cursor_x = idx_x + 1;
+      int cursor_y = idx_y + WINDOW_MIN_Y;
 
-      if (CW == window && window->cursor_x == x + 1 && window->cursor_y == i + WINDOW_MIN_Y) {
+      if (CW == window && window->cursor_x == idx_x && window->cursor_y == idx_y) {
         attributes |= A_STANDOUT;
 
-        if (cursor_x > len) {
-          cursor_x = 0;
+        if (len == 0) {
+          cursor_x = 1;
         }
       }
 
-      mvwaddch(window->handle, i + WINDOW_MIN_Y, 1 + cursor_x, (chtype)(c | attributes));
+      mvwaddch(window->handle, cursor_y, cursor_x, (chtype)(c | attributes));
     }
   }
 
@@ -166,6 +167,7 @@ const char *window_get_title(t_window *win) {
   return window_data(win)->title;
 }
 
+
 int window_current_line_index(t_window *win) {
-  return win->file_buffer->start_index + win->cursor_y - WINDOW_MIN_Y;
+  return win->file_buffer->start_index + win->cursor_y;
 }
