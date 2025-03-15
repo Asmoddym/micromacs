@@ -36,4 +36,6 @@ typedef struct s_editor {
 
 extern t_editor E;
 
+# define CW E.current_window
+
 #endif

@@ -48,7 +48,7 @@ void window_resize(t_window *win, int new_width, int new_height);
 
 int window_count();
 int window_position(t_window *window);
-
+int window_current_line_index(t_window *window);
 const char *window_get_title(t_window *win);
 
 #endif

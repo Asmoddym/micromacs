@@ -97,7 +97,7 @@ void window_print_file_buffer_lines(t_window *window, char **lines) {
       unsigned int attributes = 0;
       int cursor_x = x;
 
-      if (E.current_window == window && window->cursor_x == x + 1 && window->cursor_y == i + WINDOW_MIN_Y) {
+      if (CW == window && window->cursor_x == x + 1 && window->cursor_y == i + WINDOW_MIN_Y) {
         attributes |= A_STANDOUT;
 
         if (cursor_x > len) {
@@ -115,7 +115,7 @@ void window_print_file_buffer_lines(t_window *window, char **lines) {
 void window_print_title(t_window *window, const char *string) {
   int x, y;
   char infos[20];
-  unsigned int attributes = E.current_window == window ? A_STANDOUT : 0;
+  unsigned int attributes = CW == window ? A_STANDOUT : 0;
 
   x = window->cols / 2 - strlen(string) / 2;
   y = 1;
@@ -164,4 +164,8 @@ int window_position(t_window *win) {
 
 const char *window_get_title(t_window *win) {
   return window_data(win)->title;
+}
+
+int window_current_line_index(t_window *win) {
+  return win->file_buffer->start_index + win->cursor_y - WINDOW_MIN_Y;
 }

@@ -1,12 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "editor.h"
-#include "io/file.h"
 #include "window.h"
-
-int current_line_index(t_window *win) {
-  return win->file_buffer->start_index + win->cursor_y - WINDOW_MIN_Y;
-}
 
 void move_y_cursor(t_window *win, int y_delta) {
   // future cursor is in visible buffer
@@ -36,13 +31,13 @@ void move_y_cursor(t_window *win, int y_delta) {
 
 void move_x_cursor(t_window *win, int x_delta) {
   char **lines = win->file_buffer->lines;
-  int current_line_len = (int)strlen(lines[current_line_index(win)]);
+  int current_line_len = (int)strlen(lines[window_current_line_index(win)]);
 
   if (win->cursor_x + x_delta == 0 || (current_line_len == 0 && x_delta == -1)) {
     move_y_cursor(win, -1);
 
     // recalculating len
-    win->cursor_x = 1 + strlen(lines[current_line_index(win)]);
+    win->cursor_x = 1 + strlen(lines[window_current_line_index(win)]);
   } else {
     win->cursor_x += x_delta;
   }
@@ -55,28 +50,8 @@ void move_x_cursor(t_window *win, int x_delta) {
 
 void move_cursor(int y_delta, int x_delta) {
   if (y_delta != 0) {
-    move_y_cursor(E.current_window, y_delta);
+    move_y_cursor(CW, y_delta);
   } else {
-    move_x_cursor(E.current_window, x_delta);
-  }
-}
-
-void process_standard_callback() {
-  switch (E.ch) {
-    case 'o':
-      E.current_window->file_buffer = io_create_file_buffer("./src/window.c");
-      break;
-    case KEY_UP:
-      move_cursor(-1, 0);
-      break;
-    case KEY_DOWN:
-      move_cursor(1, 0);
-      break;
-    case KEY_LEFT:
-      move_cursor(0, -1);
-      break;
-    case KEY_RIGHT:
-      move_cursor(0, 1);
-      break;
+    move_x_cursor(CW, x_delta);
   }
 }

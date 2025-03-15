@@ -17,7 +17,7 @@ void process_key() {
 void run() {
   layout_create_new_window(FALSE);
   if (E.env.ac > 1) {
-    E.current_window->file_buffer = io_create_file_buffer(E.env.av[1]);
+    CW->file_buffer = io_create_file_buffer(E.env.av[1]);
   }
 
   refresh_editor();
