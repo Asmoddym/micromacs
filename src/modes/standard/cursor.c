@@ -11,6 +11,16 @@ int relative_x(int x) {
   return x + 1;
 }
 
+void refresh_x_cursor(t_window *win) {
+  int line_len = win->file_buffer ? (int)strlen(win->file_buffer->lines[window_current_line_index(win)]) : -1;
+
+  if (line_len == 0) return ;
+
+  if (win->cursor_x > line_len) {
+    win->cursor_x = line_len;
+  }
+}
+
 void move_y_cursor(t_window *win, int y_delta) {
   int rel_y = relative_y(win->cursor_y);
 
@@ -63,6 +73,7 @@ void move_x_cursor(t_window *win, int x_delta) {
 void move_cursor(int y_delta, int x_delta) {
   if (y_delta != 0) {
     move_y_cursor(CW, y_delta);
+    refresh_x_cursor(CW);
   } else {
     move_x_cursor(CW, x_delta);
   }
