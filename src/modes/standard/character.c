@@ -4,7 +4,6 @@
 #include "character.h"
 #include "editor.h"
 #include "cursor.h"
-#include "window.h"
 #include "utils.h"
 
 void append_character_to_line(char **line, int x, int c) {
@@ -22,7 +21,7 @@ void append_character_to_line(char **line, int x, int c) {
   (*line)[x] = c;
   (*line)[line_len + 1] = 0;
 
-  move_cursor(0, 1);
+  move_x_cursor(CW, 1);
 }
 
 void concat_line_with_previous(char **line) {
@@ -39,20 +38,20 @@ void concat_line_with_previous(char **line) {
   }
   CW->file_buffer->lines_number--;
 
-  move_cursor(-1, 0);
-  CW->cursor_x = line_len + previous_line_len;
+  move_y_cursor(CW, -1);
+  CW->cursor_x = previous_line_len;
 }
 
 void remove_character_from_line(char **line) {
   int line_len = strlen(*line);
 
   if (CW->cursor_x > 0) {
-    for (int i = CW->cursor_x - 1; i < line_len; i++) {
+    move_x_cursor(CW, -1);
+
+    for (int i = CW->cursor_x; i < line_len; i++) {
       (*line)[i] = (*line)[i + 1];
     }
     (*line)[line_len - 1] = 0;
-
-    move_cursor(0, -1);
   } else {
     if (CW->cursor_y > 0) {
       concat_line_with_previous(line);

@@ -93,7 +93,7 @@ void window_print_file_buffer_lines(t_window *window, char **lines) {
     wmove(window->handle, idx_y + WINDOW_MIN_Y, 0);
 
     for (int idx_x = 0; idx_x < window->cols - 1; idx_x++) {
-      unsigned char c = idx_x >= len ? ' ' : lines[idx_lines][idx_x];
+      unsigned int c = idx_x >= len ? ' ' : lines[idx_lines][idx_x];
       unsigned int attributes = 0;
       int cursor_x = idx_x + 1;
       int cursor_y = idx_y + WINDOW_MIN_Y;
