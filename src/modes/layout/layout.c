@@ -2,7 +2,7 @@
 #include "utils.h"
 #include "navigate.h"
 #include "window.h"
-#include "io/file.h"
+#include "file.h"
 
 void process_layout_callback() {
   switch (E.ch) {
@@ -16,7 +16,7 @@ void process_layout_callback() {
       layout_destroy_current_window();
       break;
     case 'o':
-      CW->file_buffer = io_create_file_buffer("./src/window.c");
+      CW->file_buffer = file_create_file_buffer("./src/window.c");
       break;
      case KEY_LEFT:
       layout_navigate(NAVIGATION_LEFT);

@@ -8,6 +8,7 @@
 #include "window.h"
 #include "editor.h"
 #include "utils.h"
+#include "file.h"
 
 t_window_data *window_create_data(const char *title) {
   t_window_data *data = malloc(sizeof(t_window_data));
@@ -46,8 +47,17 @@ void window_border(t_window *window, unsigned int attributes) {
 }
 
 void window_destroy(t_window *window) {
+  t_window_data *data = window_data(window);
+
   del_panel(window->panel);
   delwin(window->handle);
+
+  if (window->file_buffer) {
+    file_destroy_file_buffer(window->file_buffer);
+  }
+
+  free(data->title);
+  free(data);
 
   free(window);
 }

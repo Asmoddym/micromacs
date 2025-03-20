@@ -14,7 +14,7 @@ if (UNIX)
   set(CMAKE_CXX_FLAGS "-W -Wall -Wextra")
 endif(UNIX)
 
-add_executable(micromacs ./src/io/file.c ./src/main.c ./src/modes/layout/layout.c ./src/modes/layout/navigate.c ./src/modes/layout/window.c ./src/modes/standard/character.c ./src/modes/standard/cursor.c ./src/modes/standard/standard.c ./src/refresh.c ./src/run.c ./src/utils.c ./src/window.c)
+add_executable(micromacs ./src/file.c ./src/main.c ./src/modes/layout/layout.c ./src/modes/layout/navigate.c ./src/modes/layout/window.c ./src/modes/standard/character.c ./src/modes/standard/cursor.c ./src/modes/standard/standard.c ./src/refresh.c ./src/run.c ./src/utils.c ./src/window.c)
 target_include_directories(micromacs PRIVATE . ./src)
 target_link_libraries(micromacs curses panel)
 

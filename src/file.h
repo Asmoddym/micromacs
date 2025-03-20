@@ -1,5 +1,5 @@
-#ifndef IO_FILE_H_
-# define IO_FILE_H_
+#ifndef FILE_H_
+# define FILE_H_
 
 typedef struct s_file_data {
   char *path;
@@ -12,6 +12,8 @@ typedef struct s_file_buffer {
   int start_index;
 } t_file_buffer;
 
-t_file_buffer *io_create_file_buffer(const char *path);
+t_file_buffer *file_create_file_buffer(const char *path);
+
+void file_destroy_file_buffer(t_file_buffer *b);
 
 #endif

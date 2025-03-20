@@ -3,7 +3,7 @@
 
 # include <panel.h>
 # include <ncurses.h>
-# include "io/file.h"
+# include "file.h"
 
 # define WINDOW_HEADER_ROWS 3
 # define WINDOW_FOOTER_ROWS 1
