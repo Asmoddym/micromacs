@@ -21,9 +21,9 @@ int main(int ac, char **av) {
   start_color();
   raw();
   keypad(stdscr, TRUE);
-  meta(stdscr, FALSE);
+//  meta(stdscr, FALSE);
   nonl();
-  noecho();
+  intrflush(stdscr, FALSE);
   curs_set(0);
 
   init_pair(1, COLOR_RED, COLOR_BLACK);
