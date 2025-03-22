@@ -1,4 +1,5 @@
 #include <curses.h>
+#include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
 #include "character.h"
@@ -59,11 +60,19 @@ void remove_character_from_line(char **line) {
   }
 }
 
+void add_line(char **line) {
+
+}
+
 int process_special_character(char **line, int c) {
   switch (c) {
     case KEY_BACKSPACE:
     case 127:
       remove_character_from_line(line);
+      break;
+    case KEY_ENTER:
+    case 13:
+      add_line(line);
       break;
     default:
       return 0;
