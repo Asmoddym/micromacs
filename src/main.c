@@ -1,5 +1,6 @@
 #include "editor.h"
 #include "run.h"
+#include <locale.h>
 
 t_editor E;
 
@@ -23,8 +24,10 @@ int main(int ac, char **av) {
   cbreak();
   keypad(stdscr, TRUE);
   meta(stdscr, TRUE);
-//  nonl();
+  nonl();
   intrflush(stdscr, FALSE);
+  setlocale(LC_ALL, "");
+
   curs_set(0);
 
   init_pair(1, COLOR_RED, COLOR_BLACK);

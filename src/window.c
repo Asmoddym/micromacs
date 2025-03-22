@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include "window.h"
 #include "editor.h"
-#include "utils.h"
 #include "file.h"
 
 t_window_data *window_create_data(const char *title) {
@@ -34,8 +33,6 @@ t_window *window_create(int y, int x, int rows, int cols, const char *title) {
   window->cursor_x = 0;
   window->cursor_y = 0;
   window->file_buffer = NULL;
-
-  keypad(window->handle, TRUE);
 
   set_panel_userptr(window->panel, window_create_data(title));
 
