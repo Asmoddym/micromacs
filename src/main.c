@@ -20,9 +20,10 @@ int main(int ac, char **av) {
   initscr();
   start_color();
   raw();
+  cbreak();
   keypad(stdscr, TRUE);
-//  meta(stdscr, FALSE);
-  nonl();
+  meta(stdscr, TRUE);
+//  nonl();
   intrflush(stdscr, FALSE);
   curs_set(0);
 

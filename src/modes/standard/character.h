@@ -17,6 +17,17 @@ CTRL_S = 19,        /* Ctrl-s */
 CTRL_U = 21,        /* Ctrl-u */
 ESC = 27,           /* Escape */
 BACKSPACE =  127,   /* Backspace */
+/* The following are just soft codes, not really reported by the
+ * terminal directly. */
+ARROW_LEFT = 1000,
+ARROW_RIGHT,
+ARROW_UP,
+ARROW_DOWN,
+DEL_KEY,
+HOME_KEY,
+END_KEY,
+PAGE_UP,
+PAGE_DOWN
 };
 
 void process_character(int c);

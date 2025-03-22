@@ -61,7 +61,7 @@ void remove_character_from_line(char **line) {
 
 int process_special_character(char **line, int c) {
   switch (c) {
-    case BACKSPACE:
+    case KEY_BACKSPACE:
       remove_character_from_line(line);
       break;
     default:
